@@ -21,30 +21,18 @@ export class MyProductsComponent implements OnInit{
   
     searchText: string = '';
     selectedProduct: Product | null = null;
-    products: Product[] = [];
+   products: any[] = [];
     isLoading = false;
     errorMessage = '';
   
     constructor(private productService: ProductService) {}
   
-    ngOnInit() {
-      const brandId = 123; 
-      this.fetchProducts(brandId);
-    }
+
     
-    fetchProducts(brandId: number) {
-      this.isLoading = true;
-      this.productService.getProductsByBrand(brandId).subscribe({
-        next: (data) => {
-          this.products = data;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.errorMessage = 'Error fetching products';
-          this.isLoading = false;
-        }
-      });
-    }
+ngOnInit() {
+  this.productService.getAllProducts().subscribe(res => this.products = res);
+}
+   
     
   
     filteredProducts() {

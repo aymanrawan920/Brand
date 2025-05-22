@@ -88,6 +88,22 @@
   .login-btn:hover {
     background-color: #e55b00;
   }
+
+ .message {
+  font-size: 0.95rem;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.error-message {
+  color: #e74c3c; /* red tone */
+}
+
+.success-message {
+  color: #2ecc71; /* green tone */
+}
+
+
   
   /* OR Divider */
 .divider {

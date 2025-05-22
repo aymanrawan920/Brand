@@ -47,8 +47,16 @@
         >Forgot Password?</a
       >
 
-      <button type="submit" class="login-btn">Log in</button>
+      <button type="submit" class="login-btn" (click)="login()">Log in</button>
     </form>
+
+    <p *ngIf="errorMessage" class="message error-message text-center">
+      {{ errorMessage }}
+    </p>
+
+    <p *ngIf="successMessage" class="message success-message text-center">
+      {{ successMessage }}
+    </p>
 
     <p>
       Don’t have an account?

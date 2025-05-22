@@ -6,7 +6,7 @@
       Your first destination to publish your products and quickly reach the
       largest number of users
     </p>
-    <p>Have an account? <a href="#">Log in Here !</a></p>
+    <p>Have an account? <a href="/loginbrand">Log in Here !</a></p>
   </div>
 
   <div class="right-section">
@@ -14,84 +14,84 @@
       <h2>Register Now</h2>
       <p class="subtitle">Personal information</p>
 
-      <div class="progress-bar">
+      <div class="form-step">
         <span class="step active">1</span>
+        <span class="dash"></span>
         <span class="step">2</span>
+        <span class="dash"></span>
         <span class="step">3</span>
       </div>
-
+    </div>
+    <div>
       <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-        <label>Full Name *</label>
-        <input
-          type="text"
-          formControlName="fullName"
-          placeholder="Enter your full name"
-        />
-        <small
-          *ngIf="
-            registrationForm.get('fullName')?.invalid &&
-            registrationForm.get('fullName')?.touched
-          "
-          >Required (min 3 characters)</small
-        >
-
-        <label>Email *</label>
-        <input
-          type="email"
-          formControlName="email"
-          placeholder="Enter your email"
-        />
-        <small
-          *ngIf="
-            registrationForm.get('email')?.invalid &&
-            registrationForm.get('email')?.touched
-          "
-          >Invalid Email</small
-        >
-
-        <label>Phone Number *</label>
-        <input
-          type="text"
-          formControlName="phoneNumber"
-          placeholder="Enter your phone number"
-        />
-        <small
-          *ngIf="
-            registrationForm.get('phoneNumber')?.invalid &&
-            registrationForm.get('phoneNumber')?.touched
-          "
-          >Invalid Egyptian number</small
-        >
-
-        <label>Password *</label>
-        <input
-          type="password"
-          formControlName="password"
-          placeholder="Enter your password"
-        />
-        <small
-          *ngIf="
-            registrationForm.get('password')?.invalid &&
-            registrationForm.get('password')?.touched
-          "
-          >Min 6 characters</small
-        >
-
-        <div class="gender">
-          <label>
-            <input type="radio" formControlName="gender" value="male" /> Male
-          </label>
-          <label>
-            <input type="radio" formControlName="gender" value="female" />
-            Female
-          </label>
+        <div class="row">
+          <div class="col-6">
+            <label>First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="DisplayName"
+            />
+          </div>
+          <div class="col-6">
+            <label>Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="LastName"
+            />
+          </div>
+        </div>
+        <div class="mt-2">
+          <label>Email</label>
+          <input type="email" class="form-control" formControlName="Email" />
+          <div
+            *ngIf="
+              registrationForm.get('email')?.invalid &&
+              registrationForm.get('email')?.touched
+            "
+            class="error"
+          >
+            Valid email is required.
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-6">
+            <label>Password</label>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control"
+              formControlName="Password"
+            />
+          </div>
+        </div>
+        <div class="form-check mt-2">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            (change)="togglePasswordVisibility()"
+          />
+          <label class="show">Show Password</label>
+        </div>
+        <div class="mt-2">
+          <label>Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="PhoneNumber"
+          />
+          <div
+            *ngIf="
+              registrationForm.get('PhoneNumber')?.invalid &&
+              registrationForm.get('PhoneNumber')?.touched
+            "
+            class="error"
+          >
+            Valid phone number is required.
+          </div>
         </div>
 
-        <button
-          type="submit"
-          class="btn-continue"
-          [disabled]="registrationForm.invalid"
-        >
+        <button type="submit" class="btn" [disabled]="registrationForm.invalid">
           continue
         </button>
       </form>

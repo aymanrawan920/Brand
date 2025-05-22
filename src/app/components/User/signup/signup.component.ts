@@ -1,8 +1,12 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Signup } from 'src/app/interfaces/signup';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-signup',
+  providers:[UserService],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
@@ -10,14 +14,16 @@ export class SignupComponent {
   signupForm: FormGroup;
   showPassword = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private userService: UserService) {
     this.signupForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required]
+      DisplayName: ['', Validators.required],
+      LastName: ['', Validators.required],
+      Email: ['', [Validators.required, Validators.email]],
+      PhoneNumber: ['', [Validators.required, Validators.pattern(/^01[0-9]{9}$/)]], // رقم موبايل مصري كمثال
+      Password: ['', [Validators.required, Validators.minLength(6)]],
+      // confirmPassword: ['', Validators.required]
     });
+    
   }
 
   togglePasswordVisibility() {
@@ -25,10 +31,17 @@ export class SignupComponent {
   }
 
   onSubmit() {
-    if (this.signupForm.valid) {
-      console.log('Form Submitted:', this.signupForm.value);
-    } else {
-      alert('Please fill all fields correctly');
-    }
+
+    const postData={...this.signupForm.value};
+        this.userService.registerCustomer(postData as unknown as Signup).subscribe({
+          next: (res: any) => {
+                console.log('تم تسجيل الدخول بنجاح:', res);
+              },
+              error: (err: any) => {
+                console.error('خطأ في تسجيل الدخول:', err);
+              }
+        })
   }
+
+  
 }

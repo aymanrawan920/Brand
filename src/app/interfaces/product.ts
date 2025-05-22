@@ -7,3 +7,4 @@ export interface Product {
     description: string;
     type: string;
   }
+

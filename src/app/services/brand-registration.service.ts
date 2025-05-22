@@ -1,28 +1,27 @@
 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Register2Brand } from '../interfaces/register-2-brand';
+import { RegisterBrand } from '../interfaces/register-brand';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BrandRegistrationService {
-  stepOneData: any = {};
-  stepTwoData: any = {};
-  selectedPlan: string = '';
+  private apiUrl='https://localhost:7053/api';
 
-  constructor() {}
+    constructor(private http: HttpClient) {}
+    
+  registerBrand(data: RegisterBrand):Observable<RegisterBrand[]> {
+      return this.http.post<RegisterBrand[]>(`${this.apiUrl}/Account/register/brand`,data);
+    }
 
-  getFinalRegistrationData() {
-    return {
-      email: this.stepOneData.email,
-      displayName: this.stepOneData.fullName,
-      lastName: this.stepOneData.gender,
-      phoneNumber: this.stepOneData.phoneNumber,
-      password: this.stepOneData.password,
-      brandName: this.stepTwoData.brandName,
-      category: this.stepTwoData.category,
-      country: this.stepTwoData.country,
-      city: this.stepTwoData.city,
-      plan: this.selectedPlan
-    };
-  }
+   addBrand(formData: FormData): Observable<any> {
+  return this.http.post(`${this.apiUrl}/brands`, formData);
 }
+  
+
+
+
+   }

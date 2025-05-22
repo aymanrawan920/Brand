@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
+import { RegisterBrand } from 'src/app/interfaces/register-brand';
+import { BrandRegistrationService } from 'src/app/services/brand-registration.service';
 
 @Component({
   selector: 'app-regg-one',
@@ -10,59 +11,35 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class ReggOneComponent {
   registrationForm: FormGroup;
+  showPassword = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private api: ApiService
-  ) {
-    this.registrationForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^01[0-9]{9}$')]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      gender: ['male', Validators.required]
-    });
+  constructor(private fb: FormBuilder, private brandRegistrationService: BrandRegistrationService ,private router: Router) {
+      this.registrationForm = this.fb.group({
+        DisplayName: ['', Validators.required],
+        LastName: ['', Validators.required],
+        Email: ['', [Validators.required, Validators.email]],
+        PhoneNumber: ['', [Validators.required, Validators.pattern(/^01[0-9]{9}$/)]], 
+        Password: ['', [Validators.required, Validators.minLength(6)]],
+      });
+      
+    }
+
+     togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
+
 
   onSubmit() {
-    if (this.registrationForm.valid) {
-      const { fullName, email, phoneNumber, password } = this.registrationForm.value;
-      const [displayName, ...lastParts] = fullName.trim().split(' ');
-      const lastName = lastParts.join(' ') || '';
-  
-      const payload = {
-        email,
-        phoneNumber,
-        password,
-        displayName,
-        lastName
-      };
+    const postData={...this.registrationForm.value};
+            this.brandRegistrationService.registerBrand(postData as unknown as RegisterBrand).subscribe({
+              next: (res: any) => {
+                    console.log('تم تسجيل الدخول بنجاح:', res);
+                    this.router.navigate(['/register']);
+                  },
+                  error: (err: any) => {
+                    console.error('خطأ في تسجيل الدخول:', err);
+                  }
+            })
+      }
 
-      console.log('📦 Payload being sent:', payload);
-
-      this.api.registerBrand(payload).subscribe(
-        (res: any) => {
-          console.log('✅ API Response:', res);
-
-          const token = res.token || res.accessToken || res.jwt || null; // حسب اسم التوكن اللي بيرجعه API
-          const userType = res.userType || res.role || 'Brand'; // حسب ما بيرجعلك السيرفر
-
-          if (token) {
-            localStorage.setItem('token', token);
-            localStorage.setItem('userType', userType);
-
-            this.router.navigate(['/register']); // الخطوة الثانية
-          } else {
-            console.warn('❌ Token or userType missing in response');
-          }
-        },
-        (err: any) => {
-          console.error('❌ Registration failed:', err);
-        }
-      );
-    } else {
-      console.warn('⚠️ Registration form is invalid.');
-    }
-  }
 }

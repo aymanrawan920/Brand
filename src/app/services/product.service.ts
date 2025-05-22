@@ -1,20 +1,28 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from 'src/app/models/product.model';
+import { Product } from '../interfaces/product'; 
 
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
 
-
+private apiUrl = 'https://localhost:7053/api/Product'; 
   constructor(private http: HttpClient) {}
 
-  addProduct(productData: FormData): Observable<any> {
-    return this.http.post('http://localhost:5090/api/Product', productData);
-  }
+ addProduct(product: any): Observable<any> {
+  const token = localStorage.getItem('NEW_TOKEN');
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token || ''}`
+  });
 
-  getProductsByBrand(brandId: number): Observable<Product[]> {
-    return this.http.get<Product[]>(`http://localhost:5090/api/Product?brandId=${brandId}`);
-  }
+  return this.http.post('https://localhost:7053/api/Product', product, { headers });
+}
+
+
+
+getAllProducts(): Observable<any[]> {
+  return this.http.get<any[]>(this.apiUrl);
+}
 }

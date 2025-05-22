@@ -20,12 +20,8 @@
       </div>
     </div>
     <div class="down">
-      <form
-        [formGroup]="brandForm"
-        (ngSubmit)="onSubmit()"
-        class="reg-form"
-        enctype="multipart/form-data"
-      >
+      <form [formGroup]="brandForm" (ngSubmit)="onSubmit()" class="reg-form">
+        <!-- Brand Name -->
         <div class="full">
           <label>Brand Name <span class="astric">*</span></label>
           <input
@@ -34,6 +30,7 @@
           />
         </div>
 
+        <!-- Phone Number -->
         <div class="full">
           <label>Phone Number <span class="astric">*</span></label>
           <input
@@ -42,9 +39,11 @@
           />
         </div>
 
+        <!-- Category -->
         <div class="full">
           <label>Category <span class="astric">*</span></label>
           <select formControlName="CategoryId">
+            <option value="">Select Category</option>
             <option *ngFor="let cat of categories" [value]="cat.id">
               {{ cat.category_name }}
             </option>
@@ -52,7 +51,8 @@
           </select>
         </div>
 
-        <div class="full">
+        <!-- Other Category -->
+        <div class="full" *ngIf="brandForm.get('CategoryId')?.value == 0">
           <label>Other Category</label>
           <input
             formControlName="OtherCategory"
@@ -60,6 +60,7 @@
           />
         </div>
 
+        <!-- Description -->
         <div class="full">
           <label>Description <span class="astric">*</span></label>
           <input
@@ -68,26 +69,35 @@
           />
         </div>
 
+        <!-- Country -->
         <div class="full">
           <label>Country <span class="astric">*</span></label>
           <input formControlName="Country" placeholder="Country" />
         </div>
 
+        <!-- City -->
         <div class="full">
           <label>City <span class="astric">*</span></label>
           <input formControlName="City" placeholder="City" />
         </div>
 
+        <!-- District -->
         <div class="full">
           <label>District <span class="astric">*</span></label>
           <input formControlName="District" placeholder="District" />
         </div>
 
+        <!-- Brand Logo File Upload -->
         <div class="full">
           <label>Brand Logo</label>
-          <input type="file" (change)="onFileSelected($event)" />
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+          />
         </div>
 
+        <!-- Submit Button -->
         <div class="form-buttons">
           <button type="button" class="btn-back" (click)="goBack()">
             Back

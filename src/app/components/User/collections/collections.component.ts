@@ -10,17 +10,17 @@ import { ProductService } from 'src/app/services/product.service';
 export class CollectionsComponent {
   
   salesProducts = [
-    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/sunglasses.jpg', rating: 5, reviews: 58, discount: '-30%' },
-    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/sunglasses.jpg', rating: 5, reviews: 58, discount: '-30%' },
-    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/sunglasses.jpg', rating: 5, reviews: 58, discount: '-30%' },
-    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/sunglasses.jpg', rating: 5, reviews: 58, discount: '-30%' }
+    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/Rectangle 77 (6).png', rating: 5, reviews: 58, discount: '-30%' },
+    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/Rectangle 77 (6).png', rating: 5, reviews: 58, discount: '-30%' },
+    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/Rectangle 77 (6).png', rating: 5, reviews: 58, discount: '-30%' },
+    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/Rectangle 77 (6).png', rating: 5, reviews: 58, discount: '-30%' }
   ];
 
   bestSellingProducts = [
-    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/sunglasses.jpg', rating: 5, reviews: 58 },
-    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/sunglasses.jpg', rating: 5, reviews: 58 },
-    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/sunglasses.jpg', rating: 5, reviews: 58 },
-    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/sunglasses.jpg', rating: 5, reviews: 58 }
+    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/Rectangle 77 (6).png', rating: 5, reviews: 58 },
+    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/Rectangle 77 (6).png', rating: 5, reviews: 58 },
+    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/Rectangle 77 (6).png', rating: 5, reviews: 58 },
+    { name: 'Sunglasses', brand: 'Brand Name', price: '$10.4', image: 'assets/Rectangle 77 (6).png', rating: 5, reviews: 58 }
   ];
 
   newArrivals = [
@@ -56,19 +56,19 @@ export class CollectionsComponent {
 
   constructor(private productService: ProductService) {}
 
-  ngOnInit(): void {
-    this.loadProducts();
+  ngOnInit() {
+    // this.productService.getAllProducts().subscribe({
+    //   next: (data) => {
+    //     this.products = data;
+    //   },
+    //   error: (err) => {
+    //     console.error('Error loading products:', err);
+    //   }
+    // });
   }
 
-  loadProducts() {
-    this.productService.getProductsByBrand(10).subscribe({
-      next: (data) => {
-        this.products = data;
-      },
-      error: (err) => {
-        console.error('Error loading products:', err);
-      }
-    });
-  }
+
+
+  
   
 }

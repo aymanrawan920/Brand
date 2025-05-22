@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BrandRegistrationService } from 'src/app/services/brand-registration.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reg-three',
@@ -11,33 +12,50 @@ export class RegThreeComponent {
   isSubmitted = false;
   selectedPlan = '';
 
-  constructor(
-    private registrationService: BrandRegistrationService,
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  selectPlan(plan: string) {
+  onPlanChange(plan: string) {
     this.selectedPlan = plan;
-    this.registrationService.selectedPlan = plan;
   }
 
-  submitRequest(): void {
-    const finalData = this.registrationService.getFinalRegistrationData();
-    console.log('Final Data:', finalData);
+  submitRequest() {
+    if (!this.selectedPlan) {
+      alert('Please select a plan before submitting.');
+      return;
+    }
 
-    this.http.post('http://localhost:5090/api/Account/register/Brand', finalData).subscribe({
+    // Define the payload based on the selected plan
+    let payload: any;
+
+    if (this.selectedPlan === 'Basic') {
+      payload = {
+        id: 0,
+        plan_name: 'Basic',
+        plan_description: '1 Owner, Limited products, Post 5 products',
+        cost: 25
+      };
+    } else if (this.selectedPlan === 'Premium') {
+      payload = {
+        id: 0,
+        plan_name: 'Premium',
+        plan_description: 'Unlimited Owners, Unlimited Products, Post Free products',
+        cost: 150
+      };
+    }
+
+    this.http.post('https://localhost:7053/api/Plan', payload).subscribe({
       next: (res) => {
-        console.log('Response:', res);
         this.isSubmitted = true;
       },
       error: (err) => {
-        console.error('Error:', err);
-        alert('Something went wrong!');
+        console.error('Plan submission failed:', err);
+        alert('Failed to submit plan. Please try again.');
       }
     });
   }
 
-  closePopup(): void {
+  closePopup() {
     this.isSubmitted = false;
+    this.router.navigate(['/loginbrand']);
   }
 }

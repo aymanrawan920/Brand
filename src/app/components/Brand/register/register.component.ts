@@ -2,7 +2,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
+import { Register2Brand } from 'src/app/interfaces/register-2-brand';
+import { BrandRegistrationService } from 'src/app/services/brand-registration.service';
 
 @Component({
   selector: 'register',
@@ -10,87 +11,84 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  brandForm: FormGroup;
-  selectedFile: File | null = null;
-  categories: any[] = [];
+  brandForm!: FormGroup;
+  logoFile: File | null = null;
+ categories: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private api: ApiService
-  ) {
+    private brandRegistrationService: BrandRegistrationService,) {}
+  
+  
+
+  ngOnInit(): void {
     this.brandForm = this.fb.group({
       BrandName: ['', Validators.required],
-      PhoneNumber: ['', Validators.required],
-      CategoryId: ['', Validators.required],
+      PhoneNumber: ['', [Validators.required, Validators.pattern(/^\+?\d{10,15}$/)]],
+      CategoryId: [null],
       OtherCategory: [''],
       Description: ['', Validators.required],
       Country: ['', Validators.required],
       City: ['', Validators.required],
-      District: ['', Validators.required],
-      UserNames: [[]],
-      Urls: [[]],
-      logoFile: [null]
+      District: ['', Validators.required]
     });
 
-    this.fetchCategories();
-  }
-
-  fetchCategories(): void {
-    this.api.getCategories().subscribe({
-      next: (res: any) => {
-        console.log('✅ Categories response:', res);
-        this.categories = res.$values ?? [];
-      },
-      error: (err) => {
-        console.error('❌ Failed to fetch categories', err);
-      }
-    });
   }
 
   onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
+    this.logoFile = event.target.files?.[0] || null;
   }
 
+  // Submit form
   onSubmit(): void {
-    if (this.brandForm.valid) {
-      const formValues = this.brandForm.value;
-
-      console.log('🟢 بيانات الفورم المرسلة:', formValues);
-
-      const formData = new FormData();
-      formData.append('BrandName', formValues.BrandName);
-      formData.append('PhoneNumber', formValues.PhoneNumber);
-      formData.append('CategoryId', formValues.CategoryId);
-      formData.append('OtherCategory', formValues.OtherCategory || '');
-      formData.append('Description', formValues.Description);
-      formData.append('Country', formValues.Country);
-      formData.append('City', formValues.City);
-      formData.append('District', formValues.District);
-      formData.append('UserNames', JSON.stringify(formValues.UserNames ?? []));
-      formData.append('Urls', JSON.stringify(formValues.Urls ?? []));
-      
-      if (this.selectedFile) {
-        formData.append('logoFile', this.selectedFile);
-      }
-
-      this.api.createBrand(formData).subscribe({
-        next: () => {
-          console.log('✅ Brand created successfully');
-          this.router.navigate(['/reg-three']);
-        },
-        error: (err: any) => {
-  console.error('❌ Failed to register brand:', err);
-}
-
-      });
-
-    } else {
-      console.warn('⚠️ الفورم غير صالح. رجاءً تأكد من إدخال جميع البيانات المطلوبة.');
+    if (this.brandForm.invalid) {
+      console.warn('Form is invalid');
+      return;
     }
+
+    const formData = new FormData();
+    const data = this.brandForm.value;
+
+    formData.append('brandName', data.BrandName);
+    formData.append('phoneNumber', data.PhoneNumber);
+    if (data.CategoryId) formData.append('categoryId', data.CategoryId.toString());
+    formData.append('otherCategory', data.OtherCategory || '');
+    formData.append('description', data.Description);
+    formData.append('country', data.Country);
+    formData.append('city', data.City);
+    formData.append('district', data.District);
+
+    if (this.logoFile) {
+      formData.append('logoFile', this.logoFile);
+    }
+this.brandRegistrationService.addBrand(formData).subscribe({
+      next: res => {
+        console.log('Brand registered successfully', res);
+        this.router.navigate(['/reg-three']);
+      },
+      error: err => {
+        console.error('Brand registration failed', err);
+      }
+    });
   }
 
+
+
+  // onSubmit() {
+  //     const postData={...this.brandForm.value};
+  //             this.brandRegistrationService.register2Brand(postData as unknown as Register2Brand).subscribe({
+  //               next: (res: any) => {
+  //                     console.log('تم تسجيل الدخول بنجاح:', res);
+  //                     this.router.navigate(['/reg-three']);
+  //                   },
+  //                   error: (err: any) => {
+  //                     console.error('خطأ في تسجيل الدخول:', err);
+  //                   }
+  //             })
+  //       }
   goBack(): void {
     this.router.navigate(['/reggone']);
   }
+
 }

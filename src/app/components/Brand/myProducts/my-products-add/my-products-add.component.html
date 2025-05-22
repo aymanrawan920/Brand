@@ -28,111 +28,117 @@
         <span>Brand Name</span>
       </div>
     </div>
-    <div class="container add-product-container">
-      <h2 class="title">Add New Product</h2>
+    <div class="container mt-4">
+      <h2 class="mb-4">Add New Product</h2>
 
-      <form
-        [formGroup]="productForm"
-        (ngSubmit)="onSubmit()"
-        class="product-form"
-      >
-        <div class="row">
-          <!-- Left Column -->
-          <div class="col-md-6 left-section">
-            <div class="form-group">
-              <label>Product Name <span>*</span></label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="name"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label>Product Type <span>*</span></label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="type"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label>Available number of products <span>*</span></label>
-              <div class="input-group">
-                <input
-                  type="number"
-                  class="form-control"
-                  formControlName="available"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Product Selling Price <span>*</span></label>
-              <div class="input-group">
-                <input
-                  type="number"
-                  class="form-control"
-                  formControlName="price"
-                  required
-                />
-                <span class="input-group-text text-black">L.E</span>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Select Color <span>*</span></label>
-              <div class="color-options">
-                <span
-                  *ngFor="let color of ['black', 'red', 'green', 'blue']"
-                  [class.selected]="selectedColors.includes(color)"
-                  [style.backgroundColor]="color"
-                  (click)="toggleColor(color)"
-                >
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column -->
-          <div class="col-md-6 right-section">
-            <div class="form-group">
-              <label>Product Description <span>*</span></label>
-              <textarea
-                class="form-control description-box"
-                formControlName="description"
-                placeholder="Enter description"
-                required
-              ></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Image <span>*</span></label>
-              <div class="image-upload-box">
-                <input
-                  type="file"
-                  (change)="onFileSelected($event)"
-                  class="file-input"
-                />
-                <p>Attach a picture of the product.</p>
-              </div>
-            </div>
-          </div>
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="product_name" class="form-label">Product Name</label>
+          <input
+            id="product_name"
+            type="text"
+            class="form-control"
+            formControlName="product_name"
+          />
         </div>
 
-        <div class="text-center">
-          <button
-            type="submit"
-            class="btn btn-primary save-btn"
-            [disabled]="productForm.invalid"
+        <div class="mb-3">
+          <label for="category_id" class="form-label">Category ID</label>
+          <input
+            id="category_id"
+            type="number"
+            class="form-control"
+            formControlName="category_id"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            id="description"
+            class="form-control"
+            rows="3"
+            formControlName="description"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="actual_quantity" class="form-label"
+            >Available Quantity</label
           >
-            Save
-          </button>
+          <input
+            id="actual_quantity"
+            type="number"
+            class="form-control"
+            formControlName="actual_quantity"
+          />
         </div>
+
+        <div class="mb-3">
+          <label for="cost_price" class="form-label">Cost Price</label>
+          <input
+            id="cost_price"
+            type="number"
+            step="0.01"
+            class="form-control"
+            formControlName="cost_price"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="selling_price" class="form-label">Selling Price</label>
+          <input
+            id="selling_price"
+            type="number"
+            step="0.01"
+            class="form-control"
+            formControlName="selling_price"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="discount_percentage" class="form-label"
+            >Discount (%)</label
+          >
+          <input
+            id="discount_percentage"
+            type="number"
+            step="0.01"
+            class="form-control"
+            formControlName="discount_percentage"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="points" class="form-label">Points</label>
+          <input
+            id="points"
+            type="number"
+            step="0.01"
+            class="form-control"
+            formControlName="points"
+          />
+        </div>
+
+        <div class="form-check mb-3">
+          <input
+            id="is_archived"
+            type="checkbox"
+            class="form-check-input"
+            formControlName="is_archived"
+          />
+          <label for="is_archived" class="form-check-label"
+            >Archive this product?</label
+          >
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="productForm.invalid"
+        >
+          Submit Product
+        </button>
       </form>
     </div>
   </div>
