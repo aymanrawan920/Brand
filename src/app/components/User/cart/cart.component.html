@@ -2,23 +2,33 @@
 <div class="cart-container">
   <div class="cart-content">
     <div class="cart-items">
-      <div class="cart-item" *ngFor="let item of cartItems">
-        <img [src]="item.image" class="item-image" />
-        <div class="item-details">
-          <p>{{ item.price }} L.E</p>
-          <div class="quantity">
-            <button (click)="updateQuantity(item, -1)">-</button>
-            <span>{{ item.quantity }}</span>
-            <button (click)="updateQuantity(item, 1)">+</button>
+      <div *ngIf="cartItems && cartItems.length > 0; else emptyCart">
+        <div *ngFor="let item of cartItems" class="cart-item">
+          <img
+            [src]="item.image?.[0]"
+            alt="{{ item.product_name }}"
+            width="120"
+          />
+          <div class="item-details">
+            <p>{{ item.selling_price }} L.E</p>
+            <p>{{ item.product_name }}</p>
+            <p>category: {{ item.category }}</p>
+            <p>brand: {{ item.brand }}</p>
+            <div class="quantity">
+              <button (click)="updateQuantity(item, -1)">-</button>
+              <span>{{ item.selling_quantity }}</span>
+              <button (click)="updateQuantity(item, 1)">+</button>
+            </div>
+            <p>Total: {{ item.selling_price * item.selling_quantity }} L.E</p>
           </div>
-          <p>Total: {{ item.price * item.quantity }} L.E</p>
+          <button class="delete-btn" (click)="removeItem(item)">🗑️</button>
         </div>
-        <button class="delete-btn" (click)="removeItem(item)">🗑️</button>
       </div>
     </div>
 
-    <div class="order-summary">
+    <div class="order-summary" *ngIf="cartItems && cartItems.length > 0">
       <h3>Order Summary</h3>
+
       <p>Subtotal: {{ subtotal }} L.E</p>
       <p>Shipping: {{ shipping }} L.E</p>
       <a href="#" class="coupon">Add Coupon Code →</a>
@@ -26,9 +36,30 @@
       <p>
         <strong>Total: {{ total }} L.E</strong>
       </p>
-      <button class="checkout-btn">CHECKOUT</button>
+
+      <button class="checkout-btn" (click)="placeOrder()">CHECKOUT</button
+      ><br /><br />
+      <button class="checkout-btn" (click)="clearCart()">
+        🗑️ Delete All Products
+      </button>
     </div>
+
+    <ng-template #emptyCart>
+      <div class="cart-empty-container">
+        <div class="cart-empty">
+          <img
+            src="assets/Vector (5).png"
+            alt="Empty Cart"
+            class="cart-empty-icon"
+          />
+          <p class="cart-empty-message">No orders yet</p>
+          <p class="cart-empty-submessage">
+            Go to
+            <a routerLink="/product-page" class="product-empty-link">product</a>
+            and start shopping Now!
+          </p>
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>
-
-<app-footer></app-footer>

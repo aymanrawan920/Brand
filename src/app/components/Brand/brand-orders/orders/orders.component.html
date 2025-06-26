@@ -36,8 +36,9 @@
           type="text"
           class="form-control"
           placeholder="🔍 Search by customer name"
+          [(ngModel)]="searchTerm"
         />
-        <input type="month" class="form-control" />
+        <input type="month" class="form-control" [(ngModel)]="selectedMonth" />
       </div>
 
       <div class="table-responsive">
@@ -56,15 +57,16 @@
           <tbody>
             <tr
               *ngFor="
-                let order of orders
-                  | paginate : { itemsPerPage: itemsPerPage, currentPage: page }
+                let order of filteredOrders
+                  | paginate : { itemsPerPage, currentPage: page }
               "
             >
               <td>{{ order.id }}</td>
-              <td>{{ order.customer }}</td>
-              <td>{{ order.date }}</td>
-              <td>{{ order.cost }}</td>
-              <td>{{ order.shipping }}</td>
+              <td>{{ order.buyerEmaiil }}</td>
+              <td>{{ order.orderDate | date : "mediumDate" }}</td>
+              <td>{{ order.total | currency }}</td>
+              <td>{{ order.shippingMethod || "Standard" }}</td>
+              <td>{{ order.status || "Pending" }}</td>
               <td>
                 <span
                   class="badge"
@@ -79,7 +81,7 @@
               <td>
                 <button
                   class="btn btn-light"
-                  [routerLink]="['/order-details', order.id]"
+                  (click)="viewOrderDetails(order.id)"
                 >
                   👁️
                 </button>

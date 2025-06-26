@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PromocodeService } from 'src/app/services/promocode.service';
 
 @Component({
   selector: 'app-promocode-history',
@@ -6,15 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./promocode-history.component.css']
 })
 export class PromocodeHistoryComponent {
-  promocodes = [
-    { code: 'WEV158', description: '15% off For all orders', used: 5, created: '5/9/2024', expires: '10/1/2025' },
-    { code: 'EXB52', description: '15% off For all orders', used: 0, created: '1/2/2025', expires: 'Unlimited' },
-    { code: 'WFD268', description: '15% off For all orders', used: 30, created: '8/9/2024', expires: 'Unlimited' }
-  ];
+  promocodes: any[] = [];
   showSuccessMessage: boolean | undefined;
-
   showDeleteModal = false;
   promoToDelete: any = null;
+
+  constructor(private promoService: PromocodeService) {}
+
+  ngOnInit(): void {
+    this.promocodes = this.promoService.getPromocodes();
+    console.log('Loaded promocodes:', this.promocodes);
+  }
+
 
   confirmDelete(promo: any) {
     this.promoToDelete = promo;

@@ -2,7 +2,11 @@
   font-family: Arial, sans-serif;
   padding: 200px;
 }
-
+.cart-empty-container {
+  text-align: center;
+  margin-left: 200px;
+  margin-bottom: 200px;
+}
 
 .cart-content {
   display: flex;
@@ -107,4 +111,40 @@
   padding: 10px;
   border: none;
   cursor: pointer;
+}
+.cart-empty-title {
+  color: #e67e22; /* Orange color */
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.cart-empty {
+  text-align: center;
+}
+
+.cart-empty-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.cart-empty-message {
+  color: #aaa;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.cart-empty-submessage {
+  font-size: 14px;
+}
+
+.product-empty-link {
+  color: #e67e22;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.product-empty-link:hover {
+  text-decoration: underline;
 }

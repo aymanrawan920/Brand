@@ -9,7 +9,7 @@ import { Signup } from '../interfaces/signup';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl='https://localhost:7053/api/Account';
+  private apiUrl='http://localhost:5090/api/Account';
   constructor(private http: HttpClient) {}
 
   loginCustomer(data: Login):Observable<Login[]> {
@@ -25,4 +25,10 @@ export class UserService {
   return this.http.post<{ token: string }>(`${this.apiUrl}/Login/brand`, data);
 }
   
+getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+  saveToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
 }

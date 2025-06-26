@@ -1,0 +1,13 @@
+<div class="result-container">
+  <div *ngIf="isSuccess; else failed">
+    <img src="assets/Group (1).png" alt="Success" />
+    <h2 class="success-text">{{ message }}</h2>
+  </div>
+
+  <ng-template #failed>
+    <img src="assets/nrk_media-media-incomplete.png" alt="Failure" />
+    <h2 class="error-text">{{ message }}</h2>
+  </ng-template>
+
+  <a routerLink="/" class="back-btn">Back to Home</a>
+</div>

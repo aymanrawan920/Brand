@@ -32,6 +32,11 @@
     right: 10px;
     cursor: pointer;
   }
+
+   .btn {
+    color: white;
+    background-color: #E68332;
+  }
   
 
   .section-title {

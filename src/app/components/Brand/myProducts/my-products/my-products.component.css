@@ -69,7 +69,7 @@
     }
     .container{
         max-width: 950px;
-        height: 550px;
+        height: fit-content;
         margin-top: 20px;
         padding: 40px;
         border-radius: 10px;
@@ -106,11 +106,9 @@
 }
 
   
-  .card {
-    border: none;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
+ .card {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
   
   .card img {
     height: 200px;
@@ -119,19 +117,24 @@
     border-top-right-radius: 10px;
   }
   
+  .card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
   .color-options {
     display: flex;
-    gap: 5px;
+    gap: 2px;
     margin: 10px 0;
   }
   
   .color-circle {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    display: inline-block;
-    border: 1px solid #ccc;
-  }
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 5px;
+  border: 1px solid #ddd;
+}
   .add{
     background-color: #E68332;
     color: white;
@@ -149,3 +152,75 @@
     margin-left: 40px;
 
   }
+
+  .delete-icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px; 
+  color: #555; 
+  transition: color 0.3s ease;
+}
+
+.delete-icon-btn:hover {
+  color: #e00;
+}
+
+
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2); 
+  backdrop-filter: blur(4px);
+  z-index: 9998;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  z-index: 9999;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.close-icon {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 24px;
+  color: #0e0d0d;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.alert-icon {
+  font-size: 40px;
+  color: #f39c12;
+  margin-bottom: 1rem;
+}
+
+
+.popup-text a{
+  color: #E68332;
+  text-decoration: underline;
+}
+
+
+
+

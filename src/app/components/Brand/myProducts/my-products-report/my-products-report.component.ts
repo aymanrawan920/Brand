@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,27 +7,63 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-products-report.component.css']
 })
 export class MyProductsReportComponent implements OnInit {
-  products = [
-    { id: '', name: '', total: '', sold: '', remaining: '' },
-    { id: '', name: '', total: '', sold: '', remaining: '' },
-    { id: '', name: '', total: '', sold: '', remaining: '' },
-    { id: '', name: '', total: '', sold: '', remaining: '' },
-    { id: '', name: '', total: '', sold: '', remaining: '' },
-    { id: '', name: '', total: '', sold: '', remaining: '' },
-  ];
   searchText = '';
   currentPage = 1;
   itemsPerPage = 5;
 
-  constructor() {}
+ products: any[] = [];
+  productReport: any[] = [];
+  isLoading = true;
+  errorMessage = '';
 
-  ngOnInit(): void {}
+  constructor(private http: HttpClient) {}
 
-  filterProducts() {
-    return this.products.filter(product =>
-      product.name.toLowerCase().includes(this.searchText.toLowerCase())
-    );
+  ngOnInit(): void {
+    this.loadProducts();
   }
+
+  loadProducts(): void {
+    const backendBaseUrl = 'http://localhost:5090';
+    this.http.get<any>('http://localhost:5090/api/Product').subscribe({
+      next: (data) => {
+        const rawProducts = data?.$values ?? [];
+        console.log('Raw API Response:', data);
+
+
+        this.products = rawProducts.map((p: any) => ({
+          name: p.productName,
+          id: p.id,
+          actualQuantity: p.actualQuantity,
+          soldItem: p.soldItem,
+          total: p.actualQuantity + p.soldItem
+        }));
+
+        this.generateProductReport();
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load products', err);
+        this.errorMessage = 'Failed to load products.';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  generateProductReport(): void {
+    this.productReport = this.products.map(p => ({
+      productName: p.name,
+      productId: p.id,
+      total: p.total,
+      sold: p.soldItem,
+      remaining: p.actualQuantity
+    }));
+  }
+ filterProducts() {
+  return this.productReport.filter(product =>
+    (product.productName || '').toLowerCase().includes((this.searchText || '').toLowerCase())
+  );
+}
+
 
   get paginatedProducts() {
     const filtered = this.filterProducts();

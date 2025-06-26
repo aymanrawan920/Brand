@@ -35,7 +35,14 @@ export class LoginBrandComponent {
           next: (res: any) => { 
                 console.log('Login successful:', res);
                 localStorage.setItem('NEW_TOKEN', res.token);
+                localStorage.setItem('brandName', res.displayname);
+                localStorage.getItem("brandName");
+                 localStorage.setItem('brandName', res.brand?.brand_name || 'Your Brand');
+        localStorage.setItem('brandId', res.brand?.id.toString() || '0');
+
+
                 const payload = JSON.parse(atob(res.token.split('.')[1]));
+                console.log('Decoded JWT Payload:', payload);
                const brandId = payload.BrandId || payload.nameid || payload.sub;
                 localStorage.setItem('BRAND_ID', brandId);
           this.errorMessage = null;

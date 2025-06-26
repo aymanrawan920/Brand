@@ -17,7 +17,7 @@
       <div class="col-md-6">
         <div class="image-container">
           <img
-            src="assets\Rectangle 75.png"
+            src="assets/Rectangle 75.png"
             alt="Collections"
             class="collection-image"
           />
@@ -28,19 +28,19 @@
 </section>
 
 <!-- Sales Section -->
-<section class="product-section">
+<section class="product-section" *ngIf="salesProducts.length > 0">
   <div class="container">
     <h2 class="section-heading">Sales</h2>
     <div class="row">
       <div class="col-md-3 col-sm-6" *ngFor="let product of salesProducts">
-        <app-product-card [product]="product"></app-product-card>
+        <app-product-card [product]="product"> </app-product-card>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Best Selling Products Section -->
-<section class="product-section">
+<section class="product-section" *ngIf="bestSellingProducts.length > 0">
   <div class="container">
     <h2 class="section-heading">Best Selling Products</h2>
     <p class="subheading">This month</p>
@@ -54,13 +54,18 @@
     </div>
   </div>
 </section>
+
 <!-- New Arrival Section -->
-<section class="new-arrival-section">
+<section class="new-arrival-section" *ngIf="newArrivals?.length">
   <div class="container">
     <h2 class="section-heading">New Arrival</h2>
     <div class="arrival-grid">
       <div class="arrival-card" *ngFor="let item of newArrivals">
-        <img [src]="item.image" alt="{{ item.name }}" class="arrival-image" />
+        <img
+          [src]="item.image || 'assets/default-product.png'"
+          alt="{{ item.name }}"
+          class="arrival-image"
+        />
         <div class="arrival-info">
           <h3>{{ item.name }}</h3>
           <p>{{ item.description }}</p>
@@ -70,37 +75,60 @@
     </div>
   </div>
 </section>
+
 <!-- Explore Our Products Section -->
-<section class="explore-products-section">
+<section class="explore-products-section" *ngIf="allProducts?.length">
   <div class="container">
     <h2 class="section-heading">Explore Our Products</h2>
     <div class="product-grid">
-      <div class="product-card" *ngFor="let product of products">
+      <div class="product-card" *ngFor="let product of allProducts">
         <img
-          src="assets/default-product.png"
-          alt="Product Image"
+          [src]="product.image"
+          alt="{{ product.productName }}"
           class="product-image"
         />
+        <div class="wishlist-icon" (click)="toggleFavorite(product)">
+          <i
+            [ngClass]="
+              product.favorited ? 'fas fa-heart text-danger' : 'far fa-heart'
+            "
+          ></i>
+        </div>
         <div class="product-info">
-          <h3>{{ product.product_name }}</h3>
-          <p>Brand ID: {{ product.brand_id }}</p>
-          <p *ngIf="product.description">{{ product.description }}</p>
+          <h3>{{ product.productName }}</h3>
+          <!-- <p *ngIf="product.brandId">Brand ID: {{ product.brandId }}</p>
+          <p *ngIf="product.description">{{ product.description }}</p> -->
           <div class="price">
-            <span class="new-price">${{ product.selling_price }}</span>
-            <span class="old-price" *ngIf="product.discount_percentage > 0">
-              ${{ product.cost_price }}
+            <span class="new-price">${{ product.sellingPrice }}</span>
+            <span class="old-price" *ngIf="product.discountPercentage > 0">
+              ${{ product.costPrice }}
             </span>
           </div>
-          <div class="badge" *ngIf="product.discount_percentage > 0">
-            {{ product.discount_percentage }}% OFF
+          <div class="badge" *ngIf="product.discountPercentage > 0">
+            {{ product.discountPercentage }}% OFF
           </div>
+          <button
+            class="btn btn-cart"
+            (click)="
+              addToCart(product, product.actualQuantity || 1, {
+                name: basket?.customerName || '',
+                email: basket?.customerEmail || '',
+                phone: basket?.customerPhone || ''
+              })
+            "
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>
 
     <div class="view-all-wrapper">
-      <button class="view-all-btn">View All Products</button>
+      <button class="view-all-btn" routerLink="/products">
+        View All Products
+      </button>
     </div>
   </div>
 </section>
+
 <app-footer></app-footer>

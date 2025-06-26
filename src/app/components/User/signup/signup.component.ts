@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Signup } from 'src/app/interfaces/signup';
 import { UserService } from 'src/app/services/user.service';
 
@@ -14,7 +15,7 @@ export class SignupComponent {
   signupForm: FormGroup;
   showPassword = false;
 
-  constructor(private fb: FormBuilder, private userService: UserService) {
+  constructor(private fb: FormBuilder, private userService: UserService ,private router: Router) {
     this.signupForm = this.fb.group({
       DisplayName: ['', Validators.required],
       LastName: ['', Validators.required],
@@ -36,6 +37,7 @@ export class SignupComponent {
         this.userService.registerCustomer(postData as unknown as Signup).subscribe({
           next: (res: any) => {
                 console.log('تم تسجيل الدخول بنجاح:', res);
+                this.router.navigate(['/collections']);
               },
               error: (err: any) => {
                 console.error('خطأ في تسجيل الدخول:', err);

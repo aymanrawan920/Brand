@@ -1,111 +1,9 @@
-/* .register-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 100px;
-  background-color: #fff;
-  display: flex;
-  justify-content: space-between;
+.blurred {
+  filter: blur(5px);
+  pointer-events: none;
 }
-
- .brand-logo {
-  width: 50%;
-   text-align: center;
-  padding-top: 150px ;
-  padding-right: 400px;
-
-
-}
-.orangeP{
-  color: #FF6600;
-}
-
-.sectionTwo{
-  border-spacing: 200px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding-top: 20px;
-  margin-top: -40px;
-
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-.gray{
-  color: #ccc;
-}
-.dash{
-  color: #FF6600;
-  text-align: center;
-   padding-top: 20px;
-
- .astric{
-  color: #FF6600;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.country{
-  display: flex;
-  justify-content: space-between;
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-}
-
-button:disabled {
-  background-color: #ccc;
-}
-
-.btn-back {
-  background-color: #ccc;
-}
-
-button:not(:disabled) {
-  background-color: #FF6600;
-}
-
-.step {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-color: #FF6600;
-  color: white;
-  border-radius: 50%;
-  line-height: 20px;
-  text-align: center;
-  margin-right: 10px;
-}
-
-.step:not(.active) {
-  background-color: #ccc;
-}
-
-
-} */
 
 .orangeP {
-  /* font-size: 1.5rem;*/
   color:#E68332 ;
   font-family: Inter;
 font-size: 20px;
@@ -284,7 +182,7 @@ h2{
 .register-container
 {
   display: flex;
-  height: 100vh;
+  height: fit-content;
   background-color:#FFFFFF;
   margin-right: 100px;
 }
@@ -347,3 +245,44 @@ select{
   gap: 10px;
 }
 
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-align: center;
+  z-index: 1000;
+  width: 300px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content {
+  position: relative;
+}
+
+.popup-icon {
+  font-size: 40px;
+  color: green;
+  margin-bottom: 10px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+}
+
+.close-btn:hover {
+  color: black;
+}
+.popup-content .login{
+  background-color: green;
+  width: 50%;
+}

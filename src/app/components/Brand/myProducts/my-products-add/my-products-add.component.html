@@ -31,114 +31,77 @@
     <div class="container mt-4">
       <h2 class="mb-4">Add New Product</h2>
 
-      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <label for="product_name" class="form-label">Product Name</label>
+      <form
+        (ngSubmit)="onSubmit()"
+        #productForm="ngForm"
+        enctype="multipart/form-data"
+      >
+        <div>
+          <label>Product Name *</label>
           <input
-            id="product_name"
             type="text"
-            class="form-control"
-            formControlName="product_name"
+            [(ngModel)]="product.product_name"
+            name="product_name"
+            required
           />
-        </div>
 
-        <div class="mb-3">
-          <label for="category_id" class="form-label">Category ID</label>
+          <label>Product Type *</label>
+          <select [(ngModel)]="product.category_id" name="category_id" required>
+            <option [ngValue]="null" disabled selected>Select category</option>
+            <option *ngFor="let cat of categories" [ngValue]="cat.id">
+              {{ cat.category_name }}
+            </option>
+          </select>
+
+          <label>Available number of product *</label>
           <input
-            id="category_id"
             type="number"
-            class="form-control"
-            formControlName="category_id"
+            [(ngModel)]="product.actual_quantity"
+            name="actual_quantity"
+            required
           />
+
+          <label>Product selling price *</label>
+          <input
+            type="number"
+            [(ngModel)]="product.selling_price"
+            name="selling_price"
+            required
+          />
+
+          <label>Cost price *</label>
+          <input
+            type="number"
+            [(ngModel)]="product.cost_price"
+            name="cost_price"
+            required
+          />
+
+          <label>Select Color *</label>
+          <!-- Color options: optional -->
+          <div>
+            <span
+              *ngFor="let color of colorOptions"
+              [ngStyle]="{ background: color }"
+              (click)="selectedColor = color"
+              [class.selected]="selectedColor === color"
+            ></span>
+          </div>
         </div>
 
-        <div class="mb-3">
-          <label for="description" class="form-label">Description</label>
+        <div>
+          <label>Product Description *</label>
           <textarea
-            id="description"
-            class="form-control"
-            rows="3"
-            formControlName="description"
+            [(ngModel)]="product.description"
+            name="description"
+            required
           ></textarea>
+
+          <label>Image *</label>
+          <input type="file" (change)="onFileSelected($event)" required />
         </div>
 
-        <div class="mb-3">
-          <label for="actual_quantity" class="form-label"
-            >Available Quantity</label
-          >
-          <input
-            id="actual_quantity"
-            type="number"
-            class="form-control"
-            formControlName="actual_quantity"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="cost_price" class="form-label">Cost Price</label>
-          <input
-            id="cost_price"
-            type="number"
-            step="0.01"
-            class="form-control"
-            formControlName="cost_price"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="selling_price" class="form-label">Selling Price</label>
-          <input
-            id="selling_price"
-            type="number"
-            step="0.01"
-            class="form-control"
-            formControlName="selling_price"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="discount_percentage" class="form-label"
-            >Discount (%)</label
-          >
-          <input
-            id="discount_percentage"
-            type="number"
-            step="0.01"
-            class="form-control"
-            formControlName="discount_percentage"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="points" class="form-label">Points</label>
-          <input
-            id="points"
-            type="number"
-            step="0.01"
-            class="form-control"
-            formControlName="points"
-          />
-        </div>
-
-        <div class="form-check mb-3">
-          <input
-            id="is_archived"
-            type="checkbox"
-            class="form-check-input"
-            formControlName="is_archived"
-          />
-          <label for="is_archived" class="form-check-label"
-            >Archive this product?</label
-          >
-        </div>
-
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="productForm.invalid"
-        >
-          Submit Product
-        </button>
+        <button type="submit">Save</button>
       </form>
     </div>
   </div>

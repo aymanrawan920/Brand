@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BrandRegistrationService {
-  private apiUrl='https://localhost:7053/api';
+  private apiUrl='http://localhost:5090/api';
 
     constructor(private http: HttpClient) {}
     

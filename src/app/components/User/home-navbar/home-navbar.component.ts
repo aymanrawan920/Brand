@@ -8,6 +8,7 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./home-navbar.component.css']
 })
 export class HomeNavbarComponent {
+  constructor(private router: Router) {}
   dropdownOpen = false;
 
   @ViewChild('dropdownRef') dropdownRef!: ElementRef;
@@ -22,6 +23,15 @@ export class HomeNavbarComponent {
     if (this.dropdownRef && !this.dropdownRef.nativeElement.contains(target)) {
       this.dropdownOpen = false;
     }
+  }
+
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('BASKET_ID');
+    localStorage.removeItem('userRole');
+
+    this.router.navigate(['/loginuser']); 
   }
 
 

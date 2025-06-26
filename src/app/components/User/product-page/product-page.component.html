@@ -1,4 +1,4 @@
-<app-home-navbar></app-home-navbar>
+<!-- <app-home-navbar></app-home-navbar>
 
 <div class="container mt-5">
   <h3 class="mb-4 text-orange">Just For You</h3>
@@ -130,4 +130,120 @@
     <button class="btn btn-orange">View More</button>
   </div>
 </div>
+<app-footer></app-footer> -->
+
+<app-home-navbar></app-home-navbar>
+
+<div class="container mt-5">
+  <h3 class="mb-4 text-orange">Just For You</h3>
+  <div class="row">
+    <div class="col-md-3" *ngFor="let product of filteredProducts">
+      <div class="card position-relative product-card">
+        <img
+          [src]="product.image || 'assets/placeholder.png'"
+          class="card-img-top"
+          alt="{{ product.productName }}"
+        />
+
+        <div *ngIf="product.discountPercentage > 0" class="discount-badge">
+          -{{ product.discountPercentage }}%
+        </div>
+        <button
+          class="btn btn-cart"
+          (click)="
+            addToCart(product, product.actualQuantity || 1, {
+              name: basket?.customerName || '',
+              email: basket?.customerEmail || '',
+              phone: basket?.customerPhone || ''
+            })
+          "
+        >
+          Add to Cart
+        </button>
+
+        <div class="wishlist-icon" (click)="toggleFavorite(product)">
+          <i
+            [ngClass]="
+              product.favorited ? 'fas fa-heart text-danger' : 'far fa-heart'
+            "
+          ></i>
+        </div>
+
+        <div class="card-body">
+          <h6 class="card-title">{{ product.productName }}</h6>
+
+          <p class="card-text">
+            <span class="text-orange fw-bold"
+              >{{ product.sellingPrice }} LE</span
+            >
+            <span
+              class="text-muted text-decoration-line-through ms-2"
+              *ngIf="product.discountPercentage > 0"
+            >
+              {{ product.costPrice }} LE</span
+            >
+          </p>
+
+          <div class="d-flex align-items-center">
+            <ng-container *ngFor="let star of getStars(product.rating)">
+              <i class="fas fa-star text-warning me-1"></i>
+            </ng-container>
+            <span class="ms-1 text-muted">({{ product.reviews }})</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
+    <input
+      type="text"
+      class="form-control search-bar"
+      placeholder="Search here"
+      [(ngModel)]="filterText"
+    />
+    <button class="btn btn-dark" (click)="toggleFilterPanel()">
+      <i class="fas fa-filter"></i> Filter
+    </button>
+  </div>
+
+  <div class="filter-panel mb-3" *ngIf="showFilterPanel">
+    <h5>Filter Products</h5>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="filterOptions"
+        id="filterAll"
+        (click)="filterByBadge('all')"
+      />
+      <label class="form-check-label" for="filterAll">All</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="filterOptions"
+        id="filterNew"
+        (click)="filterByBadge('new')"
+      />
+      <label class="form-check-label" for="filterNew">New</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="filterOptions"
+        id="filterDiscount"
+        (click)="filterByBadge('discount')"
+      />
+      <label class="form-check-label" for="filterDiscount">Discount</label>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <button class="btn btn-orange">View More</button>
+  </div>
+</div>
+
 <app-footer></app-footer>

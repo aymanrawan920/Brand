@@ -1,21 +1,29 @@
 <app-home-navbar></app-home-navbar>
+
 <div class="orders-container">
   <h2 class="title">My Orders</h2>
 
-  <!-- If there are orders -->
   <div *ngIf="orders.length > 0; else noOrders">
     <div class="search-sort-bar">
       <input type="text" placeholder="Search here" />
-      <button class="sort-btn">Most recent &#9662;</button>
+      <button class="sort-btn" (click)="sortRecent()">
+        Most recent &#9662;
+      </button>
     </div>
 
-    <div class="order-card" *ngFor="let order of orders">
+    <div class="order-card" *ngFor="let order of pagedOrders">
       <img [src]="order.imageUrl" alt="Order Image" class="order-img" />
       <div class="order-details">
         <p>
           {{ order.date }} &nbsp; | &nbsp; Order Number {{ order.orderNumber }}
         </p>
-        <p>{{ order.products }} <a href="#">See details</a></p>
+        <p>
+          <ng-container *ngFor="let product of order.products; let i = index">
+            {{ product.productName
+            }}<span *ngIf="i < order.products.length - 1">, </span>
+          </ng-container>
+          <a href="#">See details</a>
+        </p>
         <p>
           Rate & Review
           <span *ngFor="let star of [1, 2, 3, 4, 5]">
@@ -35,7 +43,6 @@
       </div>
     </div>
 
-    <!-- Pagination -->
     <div class="pagination">
       <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
       <button
@@ -50,10 +57,10 @@
       </button>
     </div>
   </div>
-  <!-- If no orders -->
+
   <ng-template #noOrders>
     <div class="no-orders">
-      <img src="assets/mdi_shopping-cart-remove.png" alt="No Orders" />
+      <img src="assets/Vector (5).png" alt="No Orders" class="img" />
       <p>No orders yet</p>
       <p>
         Go to <a routerLink="/product-page">product</a> and start shopping Now!
@@ -62,7 +69,7 @@
   </ng-template>
 </div>
 
-<!-- Modal -->
+<!-- Order details modal -->
 <div
   class="modal fade"
   id="orderDetailsModal"
@@ -88,14 +95,15 @@
           <div class="col-md-4" *ngFor="let item of selectedOrder.products">
             <div class="card mb-3 text-center">
               <img
-                [src]="item.imageUrl"
+                [src]="item.pictureUrl"
                 class="card-img-top"
-                [alt]="item.name"
+                [alt]="item.productName"
                 style="height: 100px; object-fit: cover"
               />
               <div class="card-body p-2">
-                <h6 class="card-title m-0">{{ item.name }}</h6>
-                <p class="text-muted m-0">{{ item.price }}€</p>
+                <h6 class="card-title m-0">{{ item.productName }}</h6>
+                <p class="text-muted m-0">{{ item.price }}$</p>
+                <p class="text-muted m-0">Qty: {{ item.quentity }}</p>
               </div>
             </div>
           </div>

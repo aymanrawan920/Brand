@@ -55,12 +55,13 @@ import { HomeNavbarComponent } from './components/User/home-navbar/home-navbar.c
 import { CollectionsComponent } from './components/User/collections/collections.component';
 import { ProductCardComponent } from './components/User/product-card/product-card.component';
 import { ManageAccountComponent } from './components/User/manage-account/manage-account.component';
-import { UserOrdersComponent } from './components/User/user-orders/user-orders.component';
 import { ContactComponent } from './components/User/contact/contact.component';
 import { FavoritesComponent } from './components/User/favorites/favorites.component';
 import { AboutComponent } from './components/User/about/about.component';
 import { ProductPageComponent } from './components/User/product-page/product-page.component';
 import { EmptyCartComponent } from './components/User/empty-cart/empty-cart.component';
+import { PaymentResultComponent } from './components/Brand/payment-result/payment-result.component';
+import { UserOrdersComponent } from './components/User/user-orders/user-orders.component';
 
 
 @NgModule({
@@ -111,12 +112,13 @@ import { EmptyCartComponent } from './components/User/empty-cart/empty-cart.comp
     CollectionsComponent,
     ProductCardComponent,
     ManageAccountComponent,
-    UserOrdersComponent,
     ContactComponent,
     FavoritesComponent,
     AboutComponent,
     ProductPageComponent,
     EmptyCartComponent,
+    PaymentResultComponent,
+    UserOrdersComponent,
 
 
   ],

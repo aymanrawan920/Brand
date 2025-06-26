@@ -1,20 +1,50 @@
 <div class="product-card">
-  <div class="discount-badge" *ngIf="product.discount">
-    {{ product.discount }}
+  <div class="discount-badge" *ngIf="product.discountPercentage > 0">
+    {{ product.discountPercentage }}% OFF
   </div>
+  <div class="wishlist-icon" (click)="toggleFavorite(product)">
+    <i
+      [ngClass]="
+        product.favorited ? 'fas fa-heart text-danger' : 'far fa-heart'
+      "
+    ></i>
+  </div>
+
   <img [src]="product.image" alt="Product Image" class="product-image" />
+
   <div class="product-info">
-    <h3 class="product-title">{{ product.name }}</h3>
-    <p class="brand-name"><i class="fas fa-tag"></i> {{ product.brand }}</p>
-    <p class="product-price">${{ product.price }}</p>
-    <div class="rating">
+    <h3 class="product-title">{{ product.productName }}</h3>
+
+    <!-- <p class="brand-name" *ngIf="product.brandId">
+      <i class="fas fa-tag"></i> Brand #{{ product.brandId }}
+    </p> -->
+
+    <div class="price">
+      <span class="new-price">${{ product.sellingPrice }}</span>
+      <span class="old-price" *ngIf="product.discountPercentage > 0">
+        ${{ product.costPrice }}
+      </span>
+    </div>
+
+    <div class="rating" *ngIf="product.rating">
       <span
         *ngFor="let star of [1, 2, 3, 4, 5]"
-        [class.filled]="star <= product.rating"
+        [class.filled]="star <= (product.rating || 0)"
         >★</span
       >
-      <span>({{ product.reviews }})</span>
+      <span>({{ product.reviews || 0 }})</span>
+      <button
+        class="btn btn-cart"
+        (click)="
+          addToCart(product, product.actualQuantity || 1, {
+            name: basket?.customerName || '',
+            email: basket?.customerEmail || '',
+            phone: basket?.customerPhone || ''
+          })
+        "
+      >
+        Add to Cart
+      </button>
     </div>
-    <button class="cart-btn">Add To Cart</button>
   </div>
 </div>

@@ -1,110 +1,126 @@
-<div class="register-container">
-  <div class="brand-logo">
-    <img src="assets/brandfy.jpg" /><br />
-    <span class="orangeP">Join more than 200 brands around the world</span>
-    <p>
-      Your first destination to publish your products and <br />quickly reach
-      the largest number of users
-    </p>
-  </div>
-  <div class="content-left">
-    <div class="up">
-      <h2>Register Now</h2>
-      <p class="gray">Personal Information</p>
-      <div class="form-step">
-        <span class="step active">1</span>
-        <span class="dash"></span>
-        <span class="step active">2</span>
-        <span class="dash"></span>
-        <span class="step">3</span>
+<div [class.blurred]="isSubmitted">
+  <div class="register-container">
+    <div class="brand-logo">
+      <img src="assets/brandfy.jpg" /><br />
+      <span class="orangeP">Join more than 200 brands around the world</span>
+      <p>
+        Your first destination to publish your products and <br />quickly reach
+        the largest number of users
+      </p>
+    </div>
+    <div class="content-left">
+      <div class="up">
+        <h2>Register Now</h2>
+        <p class="gray">Personal Information</p>
+        <div class="form-step">
+          <span class="step active">1</span>
+          <span class="dash"></span>
+          <span class="step active">2</span>
+          <span class="dash"></span>
+          <span class="step">3</span>
+        </div>
+      </div>
+      <div class="down">
+        <form [formGroup]="brandForm" (ngSubmit)="onSubmit()" class="reg-form">
+          <!-- Brand Name -->
+          <div class="full">
+            <label>Brand Name <span class="astric">*</span></label>
+            <input
+              formControlName="BrandName"
+              placeholder="Enter your brand name"
+            />
+          </div>
+
+          <!-- Phone Number -->
+          <div class="full">
+            <label>Phone Number <span class="astric">*</span></label>
+            <input
+              formControlName="PhoneNumber"
+              placeholder="Enter your phone number"
+            />
+          </div>
+
+          <!-- Category -->
+          <div class="full">
+            <label>Category <span class="astric">*</span></label>
+            <select formControlName="CategoryId">
+              <option value="">Select Category</option>
+              <option *ngFor="let cat of categories" [value]="cat.id">
+                {{ cat.category_name }}
+              </option>
+              <option [value]="0">Other</option>
+            </select>
+          </div>
+
+          <!-- Other Category -->
+          <div class="full" *ngIf="brandForm.get('CategoryId')?.value == 0">
+            <label>Other Category</label>
+            <input
+              formControlName="OtherCategory"
+              placeholder="If Other, specify here"
+            />
+          </div>
+
+          <!-- Description -->
+          <div class="full">
+            <label>Description <span class="astric">*</span></label>
+            <input
+              formControlName="Description"
+              placeholder="Describe your brand"
+            />
+          </div>
+
+          <!-- Country -->
+          <div class="full">
+            <label>Country <span class="astric">*</span></label>
+            <input formControlName="Country" placeholder="Country" />
+          </div>
+
+          <!-- City -->
+          <div class="full">
+            <label>City <span class="astric">*</span></label>
+            <input formControlName="City" placeholder="City" />
+          </div>
+
+          <!-- District -->
+          <div class="full">
+            <label>District <span class="astric">*</span></label>
+            <input formControlName="District" placeholder="District" />
+          </div>
+
+          <!-- Brand Logo File Upload -->
+          <div class="full">
+            <label>Brand Logo</label>
+            <input
+              type="file"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-buttons">
+            <button type="button" class="btn-back" (click)="goBack()">
+              Back
+            </button>
+            <button type="submit" [disabled]="!brandForm.valid">
+              Continue
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-    <div class="down">
-      <form [formGroup]="brandForm" (ngSubmit)="onSubmit()" class="reg-form">
-        <!-- Brand Name -->
-        <div class="full">
-          <label>Brand Name <span class="astric">*</span></label>
-          <input
-            formControlName="BrandName"
-            placeholder="Enter your brand name"
-          />
-        </div>
-
-        <!-- Phone Number -->
-        <div class="full">
-          <label>Phone Number <span class="astric">*</span></label>
-          <input
-            formControlName="PhoneNumber"
-            placeholder="Enter your phone number"
-          />
-        </div>
-
-        <!-- Category -->
-        <div class="full">
-          <label>Category <span class="astric">*</span></label>
-          <select formControlName="CategoryId">
-            <option value="">Select Category</option>
-            <option *ngFor="let cat of categories" [value]="cat.id">
-              {{ cat.category_name }}
-            </option>
-            <option [value]="0">Other</option>
-          </select>
-        </div>
-
-        <!-- Other Category -->
-        <div class="full" *ngIf="brandForm.get('CategoryId')?.value == 0">
-          <label>Other Category</label>
-          <input
-            formControlName="OtherCategory"
-            placeholder="If Other, specify here"
-          />
-        </div>
-
-        <!-- Description -->
-        <div class="full">
-          <label>Description <span class="astric">*</span></label>
-          <input
-            formControlName="Description"
-            placeholder="Describe your brand"
-          />
-        </div>
-
-        <!-- Country -->
-        <div class="full">
-          <label>Country <span class="astric">*</span></label>
-          <input formControlName="Country" placeholder="Country" />
-        </div>
-
-        <!-- City -->
-        <div class="full">
-          <label>City <span class="astric">*</span></label>
-          <input formControlName="City" placeholder="City" />
-        </div>
-
-        <!-- District -->
-        <div class="full">
-          <label>District <span class="astric">*</span></label>
-          <input formControlName="District" placeholder="District" />
-        </div>
-
-        <!-- Brand Logo File Upload -->
-        <div class="full">
-          <label>Brand Logo</label>
-          <input
-            type="file"
-            (change)="onFileSelected($event)"
-            accept="image/*"
-          />
-        </div>
-
-        <!-- Submit Button -->
-        <div class="form-buttons">
-          <button type="button" class="btn-back" (click)="goBack()">
-            Back
-          </button>
-          <button type="submit" [disabled]="!brandForm.valid">Continue</button>
-        </div>
-      </form>
-    </div>
+  </div>
+</div>
+<!-- Success Popup -->
+<div class="popup" *ngIf="isSubmitted">
+  <div class="popup-content">
+    <span class="close-btn" (click)="closePopup()">&times;</span>
+    <div class="popup-icon">✔</div>
+    <h3>The request has been sent</h3>
+    <p>You will be responded to within 24 hours.</p>
+    <button class="btn login" (click)="closePopup()" routerLink="/loginbrand">
+      Login
+    </button>
   </div>
 </div>

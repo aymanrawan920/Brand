@@ -51,7 +51,10 @@
               <li>✅ Limited products</li>
               <li>✅ Post 5 products</li>
             </ul>
-            <button class="renew">Renew now</button>
+            <button class="renew" (click)="openPaymentDialog('Basic')">
+              Renew now
+            </button>
+
             <button class="current">Current Package</button>
           </div>
 
@@ -66,7 +69,7 @@
               <li>✅ Unlimited Products</li>
               <li>✅ Post Free Products</li>
             </ul>
-            <button (click)="openPaymentDialog()" class="subscribenow">
+            <button (click)="openPaymentDialog('Premium')" class="subscribenow">
               Subscribe Now
             </button>
           </div>
@@ -81,7 +84,8 @@
       <img src="assets/brandfy.jpg" />
       <button class="close-btn" (click)="closePaymentDialog()">×</button>
     </div>
-    <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+
+    <form [formGroup]="emailForm">
       <label>Email <span class="astric">*</span></label>
       <input
         type="email"
@@ -91,15 +95,16 @@
       />
 
       <div *ngIf="email?.invalid && email?.touched">
-        <small *ngIf="email?.errors?.['required']" class="error"
-          >Email is required.</small
-        >
-        <small *ngIf="email?.errors?.['email']" class="error"
-          >Invalid email format.</small
-        >
+        <small *ngIf="email?.errors?.['required']" class="error">
+          Email is required.
+        </small>
+        <small *ngIf="email?.errors?.['email']" class="error">
+          Invalid email format.
+        </small>
       </div>
     </form>
-    <label>Credit Card Number *</label>
+
+    <!-- <label>Credit Card Number *</label>
     <input
       type="text"
       required
@@ -108,10 +113,10 @@
       (input)="validateCardNumber()"
       placeholder="Enter your card number"
     />
-    <p *ngIf="showCardError" class="error">Card number must be 16 digits.</p>
+    <p *ngIf="showCardError" class="error">Card number must be 16 digits.</p> -->
 
     <button class="pay-btn" (click)="startVerification()">
-      Pay | 150.0 LE
+      Pay | {{ membershipPrice }} LE
     </button>
   </div>
 </div>

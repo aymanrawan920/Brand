@@ -15,7 +15,6 @@ import { ChangePasswordAdminComponent } from './components/Admin/changepassworda
 import {  WaitingDashBoardComponent } from './components/Brand/waiting-dashboard/waiting-dashboardcomponent';
 import { HomeComponent } from './components/User/home/home.component';
 import { CategoriesComponent } from './components/User/categories/categories.component';
-
 import { BrandMainComponent } from './components/Brand/brand-main/brand-main.component';
 import {  LoginUserComponent } from './components/User/login-user/login-user.component';
 import { SignupComponent} from './components/User/signup/signup.component';
@@ -39,12 +38,14 @@ import { OrderDetailsComponent } from './components/Brand/brand-orders/order-det
 import { HomeNavbarComponent } from './components/User/home-navbar/home-navbar.component';
 import { CollectionsComponent } from './components/User/collections/collections.component';
 import { ManageAccountComponent } from './components/User/manage-account/manage-account.component';
-import { UserOrdersComponent } from './components/User/user-orders/user-orders.component';
 import { ContactComponent } from './components/User/contact/contact.component';
 import { FavoritesComponent } from './components/User/favorites/favorites.component';
 import { AboutComponent } from './components/User/about/about.component';
 import { ProductPageComponent } from './components/User/product-page/product-page.component';
 import { EmptyCartComponent } from './components/User/empty-cart/empty-cart.component';
+import { PaymentResultComponent } from './components/Brand/payment-result/payment-result.component';
+import { UserOrdersComponent } from './components/User/user-orders/user-orders.component';
+
 
 
   
@@ -58,7 +59,7 @@ import { EmptyCartComponent } from './components/User/empty-cart/empty-cart.comp
 
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'reggone', pathMatch: 'full' },
+   { path: '', redirectTo: 'loginbrand', pathMatch: 'full' },
   {path: 'reggone', component: ReggOneComponent},
    {path:"register", component:RegisterComponent},
    {path:'reg-three',component:RegThreeComponent},
@@ -86,7 +87,7 @@ const routes: Routes = [
    { path: 'teamwork-brand', component: TeamworkBrandComponent },
    { path: 'teamwork-add', component: TeamworkAddComponent },
    { path: 'chats', component: ChatsComponent },
-   { path: 'sales-report', component: SalesReportComponent },
+   {  path: 'brand-sales-report/:brandId/:month/:year', component: SalesReportComponent },
    { path: 'sales-for-brand', component: SalesForBrandComponent },
    { path: 'my-products', component:MyProductsComponent},
    { path: 'my-products-add', component:MyProductsAddComponent},
@@ -95,14 +96,15 @@ const routes: Routes = [
    { path: 'orders', component:OrdersComponent},
    { path: 'order-details/:id', component:OrderDetailsComponent},
    { path: 'home-navbar', component:HomeNavbarComponent},
+   { path: 'user-orders', component:UserOrdersComponent},
    { path: 'collections', component:CollectionsComponent},
    { path: 'manage-account', component:ManageAccountComponent},
-   { path: 'user-orders', component:UserOrdersComponent},
    { path: 'contact', component:ContactComponent},
    { path: 'favorites', component:FavoritesComponent},
    { path: 'about', component:AboutComponent},
    { path: 'product-page', component:ProductPageComponent},
-   { path: 'empty-cart', component:EmptyCartComponent}
+   { path: 'empty-cart', component:EmptyCartComponent},
+   { path: 'payment-result', component:PaymentResultComponent}
   
 ];
 

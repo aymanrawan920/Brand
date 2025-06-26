@@ -1,24 +1,38 @@
 <div *ngIf="product" class="modal-overlay">
   <div class="modal">
     <span class="close" (click)="closeModal()">&times;</span>
+
     <h2>Product Details</h2>
-    <img [src]="product.image" alt="Product Image" />
+    <img
+      [src]="product.image"
+      alt="Product Image"
+      style="width: 100%; height: auto"
+    />
     <h3>{{ product.name }}</h3>
     <p><strong>Price:</strong> {{ product.price }} LE</p>
-    <p><strong>Description:</strong> {{ product.description }}</p>
-    <p><strong>Product Type:</strong> {{ product.type }}</p>
+    <p>
+      <strong>Description:</strong>
+      {{ product.description || "No description" }}
+    </p>
+    <p><strong>Type:</strong> {{ product.type || "N/A" }}</p>
 
-    <div class="color-options">
+    <div class="color-options mb-3">
       <span
         *ngFor="let color of product.colors"
         [style.background]="color"
         class="color-circle"
-      >
-      </span>
+        style="
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          margin-right: 5px;
+        "
+      ></span>
     </div>
 
-    <button class="edit">Edit</button>
-    <button class="archive">Archive</button>
-    <button class="delete" (click)="deleteProduct()">Delete Product</button>
+    <button class="btn btn-warning">Edit</button>
+    <button class="btn btn-secondary">Archive</button>
+    <button class="btn btn-danger" (click)="deleteProduct()">Delete</button>
   </div>
 </div>

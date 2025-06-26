@@ -14,6 +14,7 @@ export class RegisterComponent {
   brandForm!: FormGroup;
   logoFile: File | null = null;
  categories: any[] = [];
+ isSubmitted = false;
 
   constructor(
     private fb: FormBuilder,
@@ -64,8 +65,12 @@ export class RegisterComponent {
     }
 this.brandRegistrationService.addBrand(formData).subscribe({
       next: res => {
+        localStorage.setItem('brandName', res.brand?.brand_name || 'Your Brand');
+        localStorage.setItem('brandId', res.brand?.id.toString() || '0');
+
+
         console.log('Brand registered successfully', res);
-        this.router.navigate(['/reg-three']);
+        this.isSubmitted = true; 
       },
       error: err => {
         console.error('Brand registration failed', err);
@@ -74,21 +79,12 @@ this.brandRegistrationService.addBrand(formData).subscribe({
   }
 
 
-
-  // onSubmit() {
-  //     const postData={...this.brandForm.value};
-  //             this.brandRegistrationService.register2Brand(postData as unknown as Register2Brand).subscribe({
-  //               next: (res: any) => {
-  //                     console.log('تم تسجيل الدخول بنجاح:', res);
-  //                     this.router.navigate(['/reg-three']);
-  //                   },
-  //                   error: (err: any) => {
-  //                     console.error('خطأ في تسجيل الدخول:', err);
-  //                   }
-  //             })
-  //       }
   goBack(): void {
     this.router.navigate(['/reggone']);
   }
 
+  closePopup() {
+    this.isSubmitted = false;
+    this.router.navigate(['/loginbrand']);
+  }
 }

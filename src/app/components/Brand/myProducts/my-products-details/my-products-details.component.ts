@@ -16,8 +16,8 @@ interface Product {
   styleUrls: ['./my-products-details.component.css']
 })
 export class MyProductsDetailsComponent {
-  @Input() product: Product | null = null; 
-  @Output() close = new EventEmitter<void>(); 
+   @Input() product: any;
+  @Output() close = new EventEmitter<void>();
 
   closeModal() {
     this.close.emit();

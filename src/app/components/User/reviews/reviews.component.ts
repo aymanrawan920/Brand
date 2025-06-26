@@ -9,21 +9,21 @@ export class ReviewsComponent {
   reviews = [
     {
       name: 'Basma Badr',
-      image: 'assets/user1.jpg',
+      image: '',
       text: "Fast delivery and excellent product quality! I'm beyond satisfied with my purchase."
     },
     {
       name: 'Basma Badr',
-      image: 'assets/user1.jpg',
+      image: '',
       text: "Fast delivery and excellent product quality! I'm beyond satisfied with my purchase."
     },
     {
       name: 'Basma Badr',
-      image: 'assets/user1.jpg',
+      image: '',
       text: "Fast delivery and excellent product quality! I'm beyond satisfied with my purchase."
     }
   ];
-  
+
 }
 
 

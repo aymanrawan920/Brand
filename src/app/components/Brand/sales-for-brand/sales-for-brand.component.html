@@ -59,14 +59,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let sale of filteredData()">
+          <tr *ngFor="let sale of pagedData">
             <td>{{ sale.name }}</td>
             <td>{{ sale.month }}</td>
             <td>{{ sale.purchased }}</td>
             <td>{{ sale.sales }}</td>
-            <td>{{ sale.profit }}</td>
+            <td>{{ sale.profit }} L.E</td>
             <td>
-              <button routerLink="/sales-report" class="report-btn">
+              <button class="report-btn" (click)="goToReport(sale)">
                 📈 Report
               </button>
             </td>
@@ -75,22 +75,22 @@
       </table>
 
       <div class="pagination">
-        <button>&lt;</button>
-        <button class="active">1</button>
-        <button>2</button>
-        <button>...</button>
-        <button>9</button>
-        <button>10</button>
-        <button>&gt;</button>
+        <button (click)="previousPage()" [disabled]="currentPage === 1">
+          &lt;
+        </button>
+
+        <button
+          *ngFor="let page of totalPagesArray"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+          &gt;
+        </button>
       </div>
-      <!-- <div class="card flex justify-content-center">
-    <p-paginator
-        (onPageChange)="onPageChange($event)"
-        [first]="first"
-        [rows]="rows"
-        [totalRecords]="120"
-        [rowsPerPageOptions]="[10, 20, 30]" />
-  </div> -->
     </div>
   </div>
 </div>

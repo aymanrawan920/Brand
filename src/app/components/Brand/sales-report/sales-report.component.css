@@ -67,7 +67,7 @@
 }
 .sales-report-container {
   max-width: 850px;
-  height: 430px;
+  height: fit-content;
   margin: auto;
   padding: 40px;
   border-radius: 10px;

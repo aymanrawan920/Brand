@@ -42,7 +42,11 @@
           [(ngModel)]="searchText"
           placeholder="Search"
         />
-        <button class="add" routerLink="/my-products-add">
+        <button
+          class="add"
+          [routerLink]="products.length < 10 ? '/my-products-add' : null"
+          (click)="handleAddClick()"
+        >
           ➕ Add New Product
         </button>
       </div>
@@ -50,38 +54,68 @@
       <div *ngIf="isLoading" class="text-center">Loading...</div>
       <div *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</div>
 
-      <div class="row">
-        <div *ngFor="let product of filteredProducts()" class="col-md-3 mb-4">
-          <div class="card">
-            <img
-              [src]="product.image"
-              class="card-img-top"
-              alt="Product Image"
-            />
-            <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <div class="color-options">
-                <span
-                  *ngFor="let color of product.colors"
-                  [style.background]="color"
-                  class="color-circle"
-                ></span>
+      <div *ngIf="products?.length" class="container">
+        <div class="row">
+          <div
+            *ngFor="let product of filteredProducts()"
+            class="col-md-3 col-sm-6 mb-4"
+          >
+            <div class="card h-100">
+              <img
+                [src]="product.image || 'assets/Ellipse 1 (2).png'"
+                class="card-img-top"
+                alt="Product Image"
+              />
+
+              <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <button
+                  class="delete-icon-btn position-absolute top-0 end-0 m-2"
+                  (click)="confirmDelete(product)"
+                  title="Delete Product"
+                >
+                  🗑️
+                </button>
+
+                <div class="color-options mb-2">
+                  <span
+                    *ngFor="let color of product.colors"
+                    [style.background]="color"
+                    class="color-circle"
+                  ></span>
+                </div>
+                <p class="price">{{ product.price }} LE</p>
+                <button class="btn show" (click)="showProductDetails(product)">
+                  👁 Show
+                </button>
               </div>
-              <p class="price">{{ product.price }} LE</p>
-              <button class="show" (click)="showProductDetails(product)">
-                👁 Show
-              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+<!-- Product Details Modal -->
+<app-my-products-details
+  *ngIf="selectedProduct"
+  [product]="selectedProduct"
+  (close)="closeModal()"
+></app-my-products-details>
 
-    <app-my-products-details
-      *ngIf="selectedProduct"
-      [product]="selectedProduct"
-      (close)="closeModal()"
-    >
-    </app-my-products-details>
+<!-- Product Limit Popup -->
+<div class="popup-overlay" *ngIf="showLimitPopup">
+  <div class="popup">
+    <span class="close-icon" (click)="closePopup()">×</span>
+    <div class="popup-content">
+      <div class="alert-icon">
+        <img src="assets/material-symbols_error-outline-rounded.png" />
+      </div>
+      <p class="popup-text">
+        Sorry, you have reached the maximum number of products.<br />
+        To sell more products,
+        <a href="/membership">update your package now</a>.
+      </p>
+    </div>
   </div>
 </div>

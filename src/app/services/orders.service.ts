@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Order } from '../interfaces/order';
 
 
 @Injectable({
@@ -12,11 +13,21 @@ export class OrdersService {
 
   constructor(private http: HttpClient) {}
 
-  getOrders(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
-  }
+ getOrdersForBrand(brandId: number): Observable<any[]> {
+  return this.http.get<any[]>(`http://localhost:5090/api/Order/getAllOrdersForBrand?brandId=${brandId}`);
+}
 
-  getOrderById(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
-  }
+
+getOrderById(id: number): Observable<Order> {
+  const token = localStorage.getItem('NEW_TOKEN');
+const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+return this.http.get<Order>(`http://localhost:5090/api/Order/${id}`, { headers });
+
+}
+
+
+
+
+
 }

@@ -36,22 +36,30 @@ errorMessage: string | null = null;
 
 
   login() {
-    const postData={...this.loginForm.value};
-    this.userService.loginCustomer(postData as unknown as Login).subscribe({
-      next: (res: any) => {
-            console.log('Login successful:', res);
+  const postData = { ...this.loginForm.value };
+  this.userService.loginCustomer(postData as unknown as Login).subscribe({
+    next: (res: any) => {
+      console.log('Login successful:', res);
+
+      // ✅ خزن التوكن في localStorage
+      localStorage.setItem('token', res.token); // تأكدي إن اسم الخاصية صح حسب اللى راجع من السيرفر
+console.log('Received token:', res.token);
+
       this.errorMessage = null;
       this.successMessage = 'Login successful! Redirecting...';
+      console.log('Login successful:', res);
+
       setTimeout(() => {
         this.router.navigate(['/collections']);
       }, 2000);
     },
-          error: (err: any) => {
-            console.error('Login failed:', err);
+    error: (err: any) => {
+      console.error('Login failed:', err);
       this.successMessage = null;
-      this.errorMessage = 'Incorrect email or password. Please try again.';}
-    })
-    
-  }
-  
+      this.errorMessage = 'Incorrect email or password. Please try again.';
+    }
+  });
+}
+
+
 }

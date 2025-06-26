@@ -48,6 +48,10 @@
   font-size: 14px;
   outline: none;
 }
+button{
+  background-color: #E68332;
+  color: white;
+}
 
 .card {
   border-radius: 10px;

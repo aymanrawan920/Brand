@@ -83,87 +83,95 @@ a{
     margin-bottom: 25px;
   }
   
-  .product-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .row {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .left-section, .right-section {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  
-  .form-group label {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 6px;
-  }
-  
-  .form-group span {
-    color: red;
-  }
-  
-  .input-group {
-    display: flex;
-    align-items: center;
-  }
-  
-  .input-group-text {
-    display: inline-block;
-    border: none;
-    padding: 8px 10px;
-  }
-  
-  .color-options {
-    display: flex;
-    gap: 12px;
-  }
-  
-  .color-options span {
-    width: 28px;
-    height: 23px;
-    display: inline-block;
-    cursor: pointer;
-    border: 2px solid transparent;
-  }
-  
-  .color-options .selected {
-    border: 2px solid #000;
-  }
-  
-  .description-box {
-    min-height: 80px;
-    resize: none;
-  }
-  
-  .image-upload-box {
-    border: 2px dashed #E68332;
-    padding: 25px;
-    text-align: center;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .file-input {
-    margin-bottom: 10px;
-  }
-  
-  .save-btn {
-    background: #E68332;
-    border: none;
-    padding: 12px 35px;
-    font-size: 16px;
-    border-radius: 6px;
-    margin-top: 25px;
-  }
-  
+ /* Form container */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px 40px;
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+}
+
+/* Headings & Labels */
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+/* Inputs and Textarea */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  box-sizing: border-box;
+  margin-bottom: 18px;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Color Picker */
+div span {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.2s ease;
+}
+
+div span:hover,
+div span.selected {
+  border: 2px solid #f58020;
+}
+
+/* File Input (Image Upload) */
+input[type="file"] {
+  padding: 10px;
+  background-color: #fff7f0;
+  border: 2px dashed #f58020;
+  border-radius: 6px;
+  color: #888;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Submit Button */
+button[type="submit"] {
+  grid-column: span 0.5;
+  padding: 5px 10px;
+  background-color: #f58020;
+  color: white;
+  margin-left: 250px;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #e66e0b;
+}
+span.selected {
+  border: 2px solid #f58020;
+}

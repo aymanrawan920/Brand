@@ -27,9 +27,8 @@
       </div>
     </div>
     <div class="sales-report-container">
-      <h2>Sales / Report Mar ( 2024 )</h2>
+      <h2>Sales / Report {{ reportMonth }} ( {{ reportYear }} )</h2>
       <h3>Customer Name</h3>
-
       <div class="stats">
         <div class="stat-card">
           <p>Total Number of products sold</p>
@@ -41,7 +40,7 @@
         </div>
         <div class="stat-card">
           <p>Total Number of Profit</p>
-          <h3>{{ totalProfit }}</h3>
+          <h3>{{ totalProfit }} L.E</h3>
         </div>
       </div>
 
@@ -57,13 +56,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let sale of salesData">
-            <td>{{ sale.brand }}</td>
-            <td>{{ sale.orderId }}</td>
-            <td>{{ sale.date }}</td>
-            <td>{{ sale.quantity }}</td>
-            <td>{{ sale.profit }}</td>
-            <td>{{ sale.payment }}</td>
+          <tr *ngFor="let order of filteredOrders">
+            <td>{{ brandName }}</td>
+            <td>{{ order.id }}</td>
+            <td>{{ order.orderDate | date : "mediumDate" }}</td>
+            <td>{{ getOrderQuantity(order) }}</td>
+            <td>{{ getOrderProfit(order) | currency }}</td>
+            <td>{{ getPaymentMethod(order) }}</td>
           </tr>
         </tbody>
       </table>

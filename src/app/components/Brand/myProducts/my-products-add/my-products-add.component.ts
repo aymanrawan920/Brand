@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductService } from 'src/app/services/product.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-my-products-add',
@@ -9,44 +9,69 @@ import { Router } from '@angular/router';
   styleUrls: ['./my-products-add.component.css']
 })
 export class MyProductsAddComponent {
-  productForm: FormGroup;
-
-  constructor(
-    private fb: FormBuilder,
-    private productService: ProductService,
-    private router: Router
-  ) {
-    this.productForm = this.fb.group({
-      product_name: ['', Validators.required],
-      category_id: [1, Validators.required], 
-      description: [''],
-      actual_quantity: [0, [Validators.required, Validators.min(1)]],
-      cost_price: [0, [Validators.required, Validators.min(0)]],
-      selling_price: [0, [Validators.required, Validators.min(0)]],
-       discount_percentage: [0],
-       points: [0],
-       is_archived: [false]
-    });
-  }
-
- onSubmit() {
-  if (this.productForm.invalid) return;
-
-  const brandId = localStorage.getItem('BRAND_ID');
-  if (!brandId) {
-    alert('Brand ID not found. Please log in again.');
-    this.router.navigate(['/login']);
-    return;
-  }
-
-  const productData = {
-    ...this.productForm.value,
-    brand_id: +brandId  // make sure it’s a number
+  product: any = {
+    product_name: '',
+    category_id: null,
+    description: '',
+    actual_quantity: '',
+    cost_price: '',
+    selling_price: '',
+    brand_id: 1, 
+    discount_percentage: 0,
+    points: 0,
+    is_archived: false,
+    Profit: 0
   };
 
-  this.productService.addProduct(productData).subscribe({
-    next: () => alert('Product added successfully'),
-    error: err => console.error(err)
+  selectedImage!: File;
+  colorOptions = ['#000', '#f0f', '#0f0', '#0ff', '#00f', '#f00'];
+  selectedColor = '';
+  categories: any[] = [];
+
+  constructor(private http: HttpClient , private router: Router) {}
+
+  ngOnInit(): void {
+  this.http.get<any>('http://localhost:5090/api/Category').subscribe({
+    next: (res) => {
+      this.categories = res.$values;
+      console.log('Categories loaded:', this.categories);
+    },
+    error: (err) => {
+      console.error('Failed to load categories', err);
+    }
   });
 }
+
+
+  onFileSelected(event: any): void {
+    this.selectedImage = event.target.files[0];
+  }
+
+  onSubmit(): void {
+   
+    this.product.Profit = this.product.selling_price - this.product.cost_price;
+    console.log('Submitting product:', this.product);
+
+    
+
+    const formData = new FormData();
+    for (const key in this.product) {
+      formData.append(key, this.product[key]);
+    }
+
+    if (this.selectedImage) {
+      formData.append('image', this.selectedImage);
+    }
+
+    this.http.post('http://localhost:5090/api/Product', formData).subscribe({
+      next: res => {
+        console.log('Product added successfully!', res);
+        this.router.navigate(['my-products']);
+
+      },
+      error: err => {
+        console.error('Error adding product:', err);
+      }
+    });
+  }
 }

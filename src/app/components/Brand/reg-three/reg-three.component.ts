@@ -12,7 +12,7 @@ export class RegThreeComponent {
   isSubmitted = false;
   selectedPlan = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+   constructor( private router: Router) {}
 
   onPlanChange(plan: string) {
     this.selectedPlan = plan;
@@ -23,39 +23,41 @@ export class RegThreeComponent {
       alert('Please select a plan before submitting.');
       return;
     }
-
-    // Define the payload based on the selected plan
-    let payload: any;
-
-    if (this.selectedPlan === 'Basic') {
-      payload = {
-        id: 0,
-        plan_name: 'Basic',
-        plan_description: '1 Owner, Limited products, Post 5 products',
-        cost: 25
-      };
-    } else if (this.selectedPlan === 'Premium') {
-      payload = {
-        id: 0,
-        plan_name: 'Premium',
-        plan_description: 'Unlimited Owners, Unlimited Products, Post Free products',
-        cost: 150
-      };
-    }
-
-    this.http.post('https://localhost:7053/api/Plan', payload).subscribe({
-      next: (res) => {
-        this.isSubmitted = true;
-      },
-      error: (err) => {
-        console.error('Plan submission failed:', err);
-        alert('Failed to submit plan. Please try again.');
-      }
-    });
   }
+
+  //   // Define the payload based on the selected plan
+  //   let payload: any;
+
+  //   if (this.selectedPlan === 'Basic') {
+  //     payload = {
+  //       id: 0,
+  //       plan_name: 'Basic',
+  //       plan_description: '1 Owner, Limited products, Post 5 products',
+  //       cost: 25
+  //     };
+  //   } else if (this.selectedPlan === 'Premium') {
+  //     payload = {
+  //       id: 0,
+  //       plan_name: 'Premium',
+  //       plan_description: 'Unlimited Owners, Unlimited Products, Post Free products',
+  //       cost: 150
+  //     };
+  //   }
+
+  //   this.http.post('https://localhost:7053/api/Plan', payload).subscribe({
+  //     next: (res) => {
+  //       this.isSubmitted = true;
+  //     },
+  //     error: (err) => {
+  //       console.error('Plan submission failed:', err);
+  //       alert('Failed to submit plan. Please try again.');
+  //     }
+  //   });
+  // }
 
   closePopup() {
     this.isSubmitted = false;
     this.router.navigate(['/loginbrand']);
   }
 }
+
